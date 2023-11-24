@@ -1,0 +1,38 @@
+<!-- include the base template -->
+{% extends 'base.html' %}
+
+<!-- set the page title -->
+{% block title %}Home Page{% endblock %}
+
+<!-- output this content into the main -->
+{% block content %}
+
+
+    <article class="bg-stone-100 shadow shadow-lg m-6 px-4 border border-1 border-gray-300 rounded-lg">
+        <header class="p-4 border border-x-0 border-t-0 border-b-1 border-gray-400 -mx-4 bg-gray-200 rounded-t-lg shadow shadow-black/20">
+            <h2 class="text-4xl">Recommended PyCharm Plugins</h2>
+            <p class="pt-1 text-sm">These plugins will work on any of the JetBrains IDEs.</p>
+        </header>
+        <p class="my-4">
+            Use
+            <kbd class="bg-black text-sky-400 rounded px-2 ">CTRL</kbd>
+            <kbd class="bg-black text-sky-400 rounded px-2 ">ALT</kbd>
+            <kbd class="bg-black text-sky-400 rounded px-2">S</kbd>
+            to open settings.</p>
+        <p class="my-4">Navigate to the PLUGINS area on the settings.</p>
+        <p class="my-4">In the search area enter part of the plugin's name, such as <code
+                class="bg-zinc-800 px-1 rounded rounded-sm text-lime-400">rain</code> to search for the required plugin.
+        </p>
+        <p class="py-2">Install these plugins:</p>
+        <ul>
+            <li class="pb-2 ml-4">.ignore</li>
+            <li class="pb-2 ml-4">.env file support</li>
+            <li class="pb-2 ml-4">Rainbow Brackets</li>
+            <li class="pb-2 ml-4">CSV Editor</li>
+            <li class="pb-2 ml-4">Requirements</li>
+            <li class="pb-2 ml-4">Conventional Commits</li>
+            <li class="pb-2 ml-4">Zero Width Characters</li>
+        </ul>
+    </article>
+
+{% endblock %}

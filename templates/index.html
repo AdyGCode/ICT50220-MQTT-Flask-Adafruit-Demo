@@ -1,0 +1,112 @@
+<!-- include the base template -->
+{% extends 'base.html' %}
+
+<!-- set the page title -->
+{% block title %}Home Page{% endblock %}
+
+<!-- output this content into the main -->
+{% block content %}
+
+    <article
+            class="bg-stone-100 shadow shadow-lg m-6 px-4 border border-1 border-gray-300 rounded-lg flex flex-col gap-6 pb-8">
+        <header class="p-4 border border-x-0 border-t-0 border-b-1 border-gray-400 -mx-4 bg-gray-200 rounded-t-lg shadow shadow-black/20">
+            <h2 class="pt-4 pb-8 text-4xl">Setting Up</h2>
+        </header>
+        <h4 class="text-2xl">Clone Repo</h4>
+        <p>Change into your Repos folder (remember if you use all lower case then enter all lower case):</p>
+        <p>PC: <code class="language-shell">cd %userprofile%\Source\Repos</code></p>
+        <p>Mac/Linux: <code class="language-bash">cd ~\Source\Repos</code></p>
+        <p>Clone this project using: <code
+                class="language-shell">git clone https://github.com/AdyGCode/ICT50220-MQTT-Flask-Demo.git</code></p>
+        <p>Change into the new folder: <code class="language-bash">cd ICT50220-MQTT-Flask-Demo</code></p>
+        <h4 class="text-2xl">Create the Python Virtual Environment (venv)</h4>
+        <p>Create a new Python virtual environment: <code class="language-bash">python -m venv venv</code></p>
+        <p>Activate the venv:</p>
+        <p>PC: <code class="language-shell">.\venv\Scripts\activate</code></p>
+        <p>Mac/Linux: <code class="language-bash">source ./venv/bin/activate</code></p>
+        <p>Install the project requirements: <code class="language-shell">python -m pip install -r
+            requirements.txt</code></p>
+        <h4 class="text-2xl">Setup Tailwind and FontAwesome requirements</h4>
+        <p>Open a new terminal and install the required packages for TailwindCSS:
+            <code class="language-shell">npm install tailwindcss tailwind-fontawesome
+                @fortawesome/fontawesome-free</code>
+        </p>
+        <p>After this is complete run the tailwind watcher to build the css if any changes are made:
+            <code class="language-shell">npx tailwindcss --input src/site.css --output static/site.css --watch
+                --minify</code></p>
+        <h4 class="text-2xl">Mosquitto</h4>
+        <p> We will need to set up Mosquitto. For PC users we will do the following:</p>
+        <p>Download the compressed file from: [Link Name](URL).</p>
+        <p>Extract the contents so they are in a folder named <code class="language-shell">mosquitto</code>. Move this
+            into your <code class="language-shell">C:\program files\</code> folder.</p>
+        <p>At TAFE, we place the folder in the <code class="language-shell">Laragon\bin</code> folder.</p>
+        <p>For Mac users we install mosquitto using HomeBrew: <code class="language-shell">brew install mosquitto</code>
+        </p>
+        <p>Now we can configure mosquitto to run on our system and listen to our network.</p>
+        <p>PC Users: Open the <code class="language-shell">mosquitto.conf</code> file that is in the Mosquitto folder
+        </p>
+        <p>Mac Users: <b>These steps need to be tested before they are published.</b></p>
+        <p>In this file we will need to locate a variety of settings, and make modifications. </p>
+
+        <p>The table below shows the setting to find and the new value. You will add a new line AFTER the existing
+            (usually) commented out line.</p>
+        <table class="table max-w-3/4 mx-auto border shadow-md">
+            <caption class="text-left font-bold bg-gray-300 text-gray-900 text-sm px-4 py-2">Mosquitto Settings: <span
+                    class="bg-red-300/50 text-red-900 p-2">Warning: The settings below are for DEVELOPMENT purposes ONLY.</span>
+            </caption>
+            <thead>
+            <tr class="bg-gray-800 text-gray-100">
+                <th class="text-left w-1/2 p-4">Setting</th>
+                <th class="text-left w-1/2 p-4">New Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="odd:bg-gray-200">
+                <td class="py-2 px-4">To allow the listener to listen to any connection we use the IP of 0.0.0.0 and
+                    ::1, with the port we want to use for MQTT, which is usually 1883.
+                    <pre><code>#listener</code></pre>
+                </td>
+                <td class="py-2 px-4"><pre><code>#listener
+listener 1883 0.0.0.0
+listener 1883 ::1</code></pre>
+                </td>
+            </tr>
+            <tr class="odd:bg-gray-200">
+                <td class="py-2 px-4">To allow the use of clients without usernames and passwords we set "allow
+                    anonymous" value to
+                    true. Only do this in a local network for initial development.
+                    <pre><code>#allow_anonymous false</code></pre>
+                </td>
+                <td class="py-2 px-4"><pre><code>#allow_anonymous false
+allow_anonymous true</code></pre>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p>Now we can execute mosquitto by opening a new terminal, and changing into the folder with mosquitto in and
+            running...</p>
+        <p>PC Users:</p>
+        <pre><code class="language-shell">cd "c:\Program Files\mosquitto"
+mosquitto.exe -v -c .\mosquitto.conf</code></pre>
+        <p>Output from this command will look <i>similar</i> to this:</p>
+        <pre>1698398340: mosquitto version 2.0.18 starting
+1698398340: Config loaded from c:\laragon\bin\mosquitto\mosquitto.conf.
+1698398340: Opening ipv4 listen socket on port 1883.
+1698398340: Opening ipv6 listen socket on port 1883.
+1698398340: mosquitto version 2.0.18 running
+</pre>
+        <p>We now have Tailwind being build when changes are made, and mosquitto listening.</p>
+        <p>We are ready to run the demo Flask App.</p>
+        <h4 class="text-2xl">Run the Flask App</h4>
+        <p>Open a third terminal</p>
+        <p>Activate the Python environment</p>
+        <p>Execute the following command: </p>
+        <pre><code class="language-shell">flask run --host=127.0.0.1 --port=5000 --debug --reload</code></pre>
+        <p>This will run the application listening on the localhost (127.0.0.1) and port 5000. It is in debug mode and
+            should autoreload when a python file is updated</p>
+        <p>Another way is to listen for connections on any IP Address the device, and use threading to allow more than
+            one connection to be serviced at the same time has using:</p>
+        <pre><code
+                class="language-shell">flask run --host=0.0.0.0 --port=5000 --debug --reload --with-threads</code></pre>
+    </article>
+{% endblock %}
